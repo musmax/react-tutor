@@ -36,3 +36,14 @@
     transform: rotate(360deg);
   }
 }
+
+.userProps {
+  color: blue;
+  background-color: yellow;
+  padding: 30px 10px;
+  margin: 50px 0px;
+}
+
+.p1 {
+  color: red;
+}
