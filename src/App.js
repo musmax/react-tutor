@@ -1,26 +1,24 @@
-
-import { useState, useEffect } from "react";
-import {Text} from './Text'
+import  Axios  from "axios";
+import { useEffect, useState } from "react";
 import "./App.css";
 
+const App = () => {
+  const [catFact, setCatFact] = useState("");
 
-function App() {
-  const [addText, setAddtext] = useState(false);
   useEffect(() => {
-    console.log("component mounted")
-    return () => {
-    console.log("compounted unmounted");
-    return () => {
-      console.log("component updated");
-    }
-    }
+    Axios.get("https://catfact.ninja/fact").then((res) => {
+      setCatFact(res.data.length);
+    })
   }, [])
+
+
+
+
+
   return (
     <div className="App">
-      <div>
-        <button onClick={ () => (setAddtext(!addText))}>Show input box</button>
-        {addText && <Text />}
-      </div>
+      <button>Generate cat fact</button>
+      <p>{catFact}</p>
     </div>
   );
 }
