@@ -1,28 +1,29 @@
- import "./App.css";
- import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
-import { Home } from './pages/Home'
+import React, { useState, createContext } from "react";
+import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
+import { Home } from "./pages/Home";
 import { Clients } from "./pages/Clients";
-import { Profile } from './pages/Profile';
+import { UserProfile } from "./pages/Profile";
 import { Navbar } from "./Navbar";
-import { useState } from "react";
+
+// Initialize it
+export const AppContext = createContext();
 
 const App = () => {
-
-  const [username, setusername] = useState("Musa")
+  const [userName, setUserName] = useState("Musa");
   return (
     <div className="App">
-     
-      <Router>
-        <Navbar />
-        <Routes>
-          <Route path="/" element = {<Home />} />
-          <Route path="/client" element = {<Clients username = {username} setusername = {setusername}/>} />
-          <Route path="/profile" element = {<Profile username = {username} setusername = {setusername}/>} />
-          <Route path="*" element = {<h2> Page not found </h2>} />
-        </Routes>
-      </Router>
+      <AppContext.Provider value={{ userName, setUserName }}>
+        <Router>
+          <Navbar />
+          <Routes>
+            <Route path="/" element={<Home />} />
+            <Route path="/client" element={<Clients />} />
+            <Route path="/profile" element={<UserProfile />} />
+            <Route path="*" element={<h2> Page not found </h2>} />
+          </Routes>
+        </Router>
+      </AppContext.Provider>
     </div>
-
   );
 };
 
