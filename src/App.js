@@ -4,25 +4,31 @@ import { Home } from './pages/Home'
 import { Clients } from "./pages/Clients";
 import { Profile } from './pages/Profile';
 import { Navbar } from "./Navbar";
-import { useState } from "react";
+import {QueryClient, QueryClientProvider} from "@tanstack/react-query"
+
+const client = new QueryClient({
+  defaultOptions:  {
+    queries:{
+      refetchOnWindowFocus: false,
+    }
+  }
+});
 
 const App = () => {
-
-  const [username, setusername] = useState("Musa")
   return (
     <div className="App">
-     
-      <Router>
+     <QueryClientProvider client={client}>
+     <Router>
         <Navbar />
         <Routes>
           <Route path="/" element = {<Home />} />
-          <Route path="/client" element = {<Clients username = {username} setusername = {setusername}/>} />
-          <Route path="/profile" element = {<Profile username = {username} setusername = {setusername}/>} />
+          <Route path="/client" element = {<Clients />} />
+          <Route path="/profile" element = {<Profile />} />
           <Route path="*" element = {<h2> Page not found </h2>} />
         </Routes>
       </Router>
+     </QueryClientProvider>
     </div>
-
   );
 };
 

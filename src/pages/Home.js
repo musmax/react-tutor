@@ -1,3 +1,18 @@
+import { useQuery } from "@tanstack/react-query";
+import Axios from "axios";
 export const Home = () => {
-    return('Welcome to the home page user');
-}
+  const { data, isLoading, refetch} = useQuery(["cat"], () => {
+    return Axios.get("https://catfact.ninja/fact").then((res) => res.data);
+  });
+  if (isLoading) {
+    return (
+        <h1>Loading...</h1>
+    )
+  }
+  return (
+    <div>
+      <p>The incoming data is: {data?.fact}</p>
+      <button onClick={refetch}>Refresh</button>
+    </div>
+  );
+};
